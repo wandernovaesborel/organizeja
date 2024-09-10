@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda de Eventos com Firebase e Autenticação</title>
     <style>
         body {
-            background-color: #121212;
-            color: #E0E0E0;
+            background-color: #D2A8FF;
+            color: #A100FF;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -22,7 +23,7 @@
         }
 
         .form-container {
-            background-color: #1F1F1F;
+            background-color: #D2A8FF;
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
@@ -31,12 +32,12 @@
         }
 
         h1 {
-            color: #E0E0E0;
+            color: #A100FF;
             font-size: 24px;
             margin-bottom: 20px;
         }
 
-        input, button {
+        input {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -45,9 +46,27 @@
             box-sizing: border-box;
         }
 
-        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="time"] {
-            background-color: #333;
-            color: #E0E0E0;
+        button {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="time"] {
+            background-color: #D2A8FF;
+            color: #2E16FF;
+            border-bottom: 2px solid #A100FF;
+        }
+
+        ::placeholder {
+            color: #2E16FF;
         }
 
         button {
@@ -55,6 +74,22 @@
             color: #E0E0E0;
             cursor: pointer;
         }
+
+        /* Botão LogOut */
+
+        #botaoLogout {
+            background-color: #6200EE;
+            color: #E0E0E0;
+            cursor: pointer;
+            float: right;
+            width: 15%;
+        }
+
+        #botaoLogout:hover {
+            background-color: #3700B3;
+        }
+
+
 
         button:hover {
             background-color: #3700B3;
@@ -94,7 +129,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
         }
@@ -127,18 +162,32 @@
             cursor: pointer;
         }
 
+        /* Campos data e hora */
+        .date-time-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .date-time-container input {
+            flex: 1;
+        }
+
+
         @media (max-width: 600px) {
             .container {
                 padding: 10px;
             }
 
-            .form-container, .event-container, .modal-content {
+            .form-container,
+            .event-container,
+            .modal-content {
                 width: 100%;
                 padding: 15px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Container de autenticação -->
@@ -154,12 +203,16 @@
 
         <!-- Container de CRUD de eventos -->
         <div id="crudContainer">
+            <button id="botaoLogout">Logout</button>       
+           
             <h1>Adicionar Novo Evento</h1>
             <form id="formEvento" class="form-container">
                 <input type="text" id="inputNome" placeholder="Nome do Evento" required>
                 <input type="text" id="inputDescricao" placeholder="Descrição do Evento" required>
-                <input type="date" id="inputData" required>
-                <input type="time" id="inputHorario" required>
+                <div class="date-time-container">
+                    <input type="date" id="inputData" required>
+                    <input type="time" id="inputHorario" required>
+                </div>
                 <input type="text" id="inputLocal" placeholder="Local do Evento" required>
                 <input type="text" id="inputParticipantes" placeholder="Participantes (separados por vírgula)">
                 <button type="submit">Adicionar Evento</button>
@@ -167,7 +220,6 @@
 
             <h1>Eventos</h1>
             <div id="containerEventos" class="event-container"></div>
-            <button id="botaoLogout">Logout</button>
         </div>
     </div>
 
@@ -212,7 +264,7 @@
         let usuarioAtual = null;
 
         // Função de autenticação de usuários
-        document.getElementById('formLogin').addEventListener('submit', async function(evento) {
+        document.getElementById('formLogin').addEventListener('submit', async function (evento) {
             evento.preventDefault();
             const email = document.getElementById('inputEmail').value;
             const senha = document.getElementById('inputSenha').value;
@@ -226,7 +278,7 @@
         });
 
         // Função de cadastro de novos usuários
-        document.getElementById('botaoCadastro').addEventListener('click', async function() {
+        document.getElementById('botaoCadastro').addEventListener('click', async function () {
             const email = prompt('Digite seu e-mail:');
             const senha = prompt('Digite sua senha:');
             if (email && senha) {
@@ -241,7 +293,7 @@
         });
 
         // Função de logout
-        document.getElementById('botaoLogout').addEventListener('click', async function() {
+        document.getElementById('botaoLogout').addEventListener('click', async function () {
             try {
                 await signOut(auth);
                 alert('Logout realizado com sucesso!');
@@ -266,7 +318,7 @@
         });
 
         // Função para adicionar evento
-        document.getElementById('formEvento').addEventListener('submit', async function(evento) {
+        document.getElementById('formEvento').addEventListener('submit', async function (evento) {
             evento.preventDefault();
             const nome = document.getElementById('inputNome').value;
             const descricao = document.getElementById('inputDescricao').value;
@@ -295,7 +347,7 @@
         });
 
         // Função para editar evento
-        window.editarEvento = async function(id) {
+        window.editarEvento = async function (id) {
             const modal = document.getElementById('modalEdicao');
             const span = document.getElementsByClassName('close')[0];
             const eventoId = document.getElementById('inputEventoId');
@@ -308,11 +360,11 @@
 
             modal.style.display = 'flex';
 
-            span.onclick = function() {
+            span.onclick = function () {
                 modal.style.display = 'none';
             }
 
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target == modal) {
                     modal.style.display = 'none';
                 }
@@ -345,7 +397,7 @@
         }
 
         // Função para excluir evento
-        window.excluirEvento = async function(id) {
+        window.excluirEvento = async function (id) {
             const confirmar = confirm('Tem certeza de que deseja excluir este evento?');
             if (confirmar) {
                 try {
@@ -369,7 +421,7 @@
         }
 
         // Função para salvar alterações do evento
-        document.getElementById('formEditEvento').addEventListener('submit', async function(evento) {
+        document.getElementById('formEditEvento').addEventListener('submit', async function (evento) {
             evento.preventDefault();
             const id = document.getElementById('inputEventoId').value;
             const nome = document.getElementById('inputEditNome').value;
@@ -439,4 +491,5 @@
         }
     </script>
 </body>
+
 </html>
