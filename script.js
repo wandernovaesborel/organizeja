@@ -145,11 +145,12 @@ window.editarEvento = async function (id) {
                     inputNome.value = evento.nome;
                     inputDescricao.value = evento.descricao;
                     
-                    // Converte a string da data em um objeto Date
-                    const dataEvento = new Date(evento.data);
-
-                    // Formata a data no formato Dia/Mês/Ano
-                    inputData.value = formatarData(dataEvento);
+                    // Formatar a data para DD/MM/YYYY
+                    const data = new Date(evento.data.toDate()); // Converter para Date
+                    const dia = String(data.getDate()).padStart(2, '0');
+                    const mes = String(data.getMonth() + 1).padStart(2, '0');
+                    const ano = data.getFullYear();
+                    inputData.value = `${dia}/${mes}/${ano}`;
                     
                     inputHorario.value = evento.horario;
                     inputLocal.value = evento.local;
@@ -165,6 +166,7 @@ window.editarEvento = async function (id) {
         }
     }
 }
+
 
 // Função para excluir evento
 window.excluirEvento = async function (id) {
@@ -197,7 +199,7 @@ document.getElementById('formEditEvento').addEventListener('submit', async funct
     const nome = document.getElementById('inputEditNome').value;
     const descricao = document.getElementById('inputEditDescricao').value;
     
-    // Converte a data do formato Dia/Mês/Ano para Date
+    // Converte a data do formato DD/MM/YYYY para Date
     const dataStr = document.getElementById('inputEditData').value;
     const [dia, mes, ano] = dataStr.split('/').map(Number);
     const data = new Date(ano, mes - 1, dia); // Meses são indexados de 0 a 11
@@ -233,6 +235,7 @@ document.getElementById('formEditEvento').addEventListener('submit', async funct
         alert('Erro ao atualizar evento. Tente novamente mais tarde.');
     }
 });
+
 
 // Função para carregar eventos do usuário atual
 async function carregarEventos() {
