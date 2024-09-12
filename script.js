@@ -2,13 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/fireba
 import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc, query, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-function formatarData(data) {
-    const dia = String(data.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se necessário
-    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda no mês
-    const ano = data.getFullYear(); // Ano completo com 4 dígitos
-    return `${dia}/${mes}/${ano}`;
-}
-
 // Função para formatar a data no formato Dia/Mês/Ano
 function formatarData(data) {
     const dia = String(data.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se necessário
@@ -16,7 +9,6 @@ function formatarData(data) {
     const ano = data.getFullYear(); // Ano completo com 4 dígitos
     return `${dia}/${mes}/${ano}`;
 }
-
 
 // Configurações do Firebase
 const configuracaoFirebase = {
