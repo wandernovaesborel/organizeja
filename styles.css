@@ -58,7 +58,7 @@ input[type="time"] {
 }
 
 ::placeholder {
-    color: #D2A8FF;
+    color: #2E16FF;
 }
 
 button {
@@ -70,7 +70,7 @@ button {
 /* Botão LogOut */
 
 #botaoLogout {
-    background-color: #6200EE;
+    background-color: #E0E0E0;
     color: #E0E0E0;
     cursor: pointer;
     float: right;
