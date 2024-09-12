@@ -146,7 +146,13 @@ window.editarEvento = async function (id) {
                     inputDescricao.value = evento.descricao;
                     
                     // Formatar a data para DD/MM/YYYY
-                    const data = new Date(evento.data.toDate()); // Converter para Date
+                    let data;
+                    if (evento.data.toDate) {
+                        data = evento.data.toDate(); // Se for um Timestamp do Firebase
+                    } else {
+                        data = new Date(evento.data); // Caso contrário, assume que é uma string ISO
+                    }
+                    
                     const dia = String(data.getDate()).padStart(2, '0');
                     const mes = String(data.getMonth() + 1).padStart(2, '0');
                     const ano = data.getFullYear();
@@ -166,6 +172,7 @@ window.editarEvento = async function (id) {
         }
     }
 }
+
 
 
 // Função para excluir evento
