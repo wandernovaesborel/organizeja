@@ -2,6 +2,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/fireba
 import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc, query, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
+
+// Função para formatar a data no formato Dia/Mês/Ano
+function formatarData(data) {
+    const dia = String(data.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se necessário
+    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda no mês
+    const ano = data.getFullYear(); // Ano completo com 4 dígitos
+    return `${dia}/${mes}/${ano}`;
+}
+
+
 // Configurações do Firebase
 const configuracaoFirebase = {
     apiKey: "AIzaSyCS7_vKtYKJfIK2B_rY-6Li4qGONysAYbw",
@@ -215,6 +225,8 @@ document.getElementById('formEditEvento').addEventListener('submit', async funct
     }
 });
 
+
+
 // Função para carregar eventos do usuário atual
 async function carregarEventos() {
     const containerEventos = document.getElementById('containerEventos');
@@ -245,4 +257,3 @@ async function carregarEventos() {
         alert('Erro ao carregar eventos. Tente novamente mais tarde.');
     }
 }
-
