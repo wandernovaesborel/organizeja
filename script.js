@@ -19,6 +19,8 @@ const auth = getAuth(app);
 
 let usuarioAtual = null;
 
+
+
 // Função de autenticação de usuários
 document.getElementById('formLogin').addEventListener('submit', async function (evento) {
     evento.preventDefault();
@@ -32,6 +34,8 @@ document.getElementById('formLogin').addEventListener('submit', async function (
         alert('Erro ao fazer login. Verifique suas credenciais.');
     }
 });
+
+
 
 // Função de cadastro de novos usuários
 document.getElementById('botaoCadastro').addEventListener('click', async function () {
@@ -48,6 +52,8 @@ document.getElementById('botaoCadastro').addEventListener('click', async functio
     }
 });
 
+
+
 // Função de logout
 document.getElementById('botaoLogout').addEventListener('click', async function () {
     try {
@@ -58,6 +64,8 @@ document.getElementById('botaoLogout').addEventListener('click', async function 
         alert('Erro ao fazer logout.');
     }
 });
+
+
 
 // Verifica se há um usuário autenticado
 onAuthStateChanged(auth, (usuario) => {
@@ -73,37 +81,10 @@ onAuthStateChanged(auth, (usuario) => {
     }
 });
 
-// Função para adicionar evento
-document.getElementById('formEvento').addEventListener('submit', async function (evento) {
-    evento.preventDefault();
-    const nome = document.getElementById('inputNome').value;
-    const descricao = document.getElementById('inputDescricao').value;
-    const data = document.getElementById('inputData').value;
-    const horario = document.getElementById('inputHorario').value;
-    const local = document.getElementById('inputLocal').value;
-    const participantes = document.getElementById('inputParticipantes').value.split(',').map(p => p.trim());
 
-    try {
-        await addDoc(collection(db, 'eventos'), {
-            nome,
-            descricao,
-            data,
-            horario,
-            local,
-            participantes,
-            usuarioId: usuarioAtual
-        });
-        alert('Evento adicionado com sucesso!');
-        document.getElementById('formEvento').reset();
-        carregarEventos();
-    } catch (erro) {
-        console.error('Erro ao adicionar evento:', erro);
-        alert('Erro ao adicionar evento. Tente novamente mais tarde.');
-    }
-});
 
 // Função para editar evento
-window.editarEvento = async function (id) {
+window.editarApelido = async function (id) {
     const modal = document.getElementById('modalEdicao');
     const span = document.getElementsByClassName('close')[0];
     const eventoId = document.getElementById('inputEventoId');
@@ -113,6 +94,7 @@ window.editarEvento = async function (id) {
     const inputHorario = document.getElementById('inputEditHorario');
     const inputLocal = document.getElementById('inputEditLocal');
     const inputParticipantes = document.getElementById('inputEditParticipantes');
+    const selectPrioridade = document.getElementById('inputEditPrioridade'); // Novo campo de prioridade
 
     modal.style.display = 'flex';
 
@@ -140,6 +122,7 @@ window.editarEvento = async function (id) {
                     inputHorario.value = evento.horario;
                     inputLocal.value = evento.local;
                     inputParticipantes.value = evento.participantes.join(', ');
+                    selectPrioridade.value = evento.prioridade; // Preenche o campo de prioridade
                 } else {
                     alert('Você não tem permissão para editar este evento.');
                     modal.style.display = 'none';
@@ -151,6 +134,96 @@ window.editarEvento = async function (id) {
         }
     }
 }
+
+
+
+// Função para adicionar evento
+document.getElementById('formEvento').addEventListener('submit', async function (evento) {
+    evento.preventDefault();
+    const nome = document.getElementById('inputNome').value;
+    const descricao = document.getElementById('inputDescricao').value;
+    const data = document.getElementById('inputData').value;
+    const horario = document.getElementById('inputHorario').value;
+    const local = document.getElementById('inputLocal').value;
+    const participantes = document.getElementById('inputParticipantes').value.split(',').map(p => p.trim());
+    const prioridade = document.getElementById('inputPrioridade').value; // Adiciona a prioridade
+
+    try {
+        await addDoc(collection(db, 'eventos'), {
+            nome,
+            descricao,
+            data,
+            horario,
+            local,
+            participantes,
+            prioridade, // Adiciona a prioridade ao documento
+            usuarioId: usuarioAtual
+        });
+        alert('Evento adicionado com sucesso!');
+        document.getElementById('formEvento').reset();
+        carregarEventos();
+    } catch (erro) {
+        console.error('Erro ao adicionar evento:', erro);
+        alert('Erro ao adicionar evento. Tente novamente mais tarde.');
+    }
+});
+
+
+
+// Função para editar evento
+window.editarEvento = async function (id) {
+    const modal = document.getElementById('modalEdicao');
+    const span = document.getElementsByClassName('close')[0];
+    const eventoId = document.getElementById('inputEventoId');
+    const inputNome = document.getElementById('inputEditNome');
+    const inputDescricao = document.getElementById('inputEditDescricao');
+    const inputData = document.getElementById('inputEditData');
+    const inputHorario = document.getElementById('inputEditHorario');
+    const inputLocal = document.getElementById('inputEditLocal');
+    const inputParticipantes = document.getElementById('inputEditParticipantes');
+    const selectPrioridade = document.getElementById('inputEditPrioridade'); // Novo campo de prioridade
+
+    modal.style.display = 'flex';
+
+    span.onclick = function () {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    if (id) {
+        try {
+            const eventoRef = doc(db, 'eventos', id);
+            const eventoSnap = await getDoc(eventoRef);
+            if (eventoSnap.exists()) {
+                const evento = eventoSnap.data();
+                if (evento.usuarioId === usuarioAtual) { // Verifica se o evento pertence ao usuário atual
+                    eventoId.value = id;
+                    inputNome.value = evento.nome;
+                    inputDescricao.value = evento.descricao;
+                    inputData.value = evento.data;
+                    inputHorario.value = evento.horario;
+                    inputLocal.value = evento.local;
+                    inputParticipantes.value = evento.participantes.join(', ');
+                    selectPrioridade.value = evento.prioridade; // Preenche o campo de prioridade
+                } else {
+                    alert('Você não tem permissão para editar este evento.');
+                    modal.style.display = 'none';
+                }
+            }
+        } catch (erro) {
+            console.error('Erro ao carregar dados do evento:', erro);
+            alert('Erro ao carregar dados do evento.');
+        }
+    }
+}
+
+
+
 
 // Função para excluir evento
 window.excluirEvento = async function (id) {
@@ -176,6 +249,9 @@ window.excluirEvento = async function (id) {
     }
 }
 
+
+
+
 // Função para salvar alterações do evento
 document.getElementById('formEditEvento').addEventListener('submit', async function (evento) {
     evento.preventDefault();
@@ -186,6 +262,7 @@ document.getElementById('formEditEvento').addEventListener('submit', async funct
     const horario = document.getElementById('inputEditHorario').value;
     const local = document.getElementById('inputEditLocal').value;
     const participantes = document.getElementById('inputEditParticipantes').value.split(',').map(p => p.trim());
+    const prioridade = document.getElementById('inputEditPrioridade').value; // Adiciona a prioridade
 
     try {
         const eventoRef = doc(db, 'eventos', id);
@@ -199,7 +276,8 @@ document.getElementById('formEditEvento').addEventListener('submit', async funct
                     data,
                     horario,
                     local,
-                    participantes
+                    participantes,
+                    prioridade // Atualiza a prioridade
                 });
                 alert('Evento atualizado com sucesso!');
                 document.getElementById('modalEdicao').style.display = 'none';
@@ -214,6 +292,7 @@ document.getElementById('formEditEvento').addEventListener('submit', async funct
         alert('Erro ao atualizar evento. Tente novamente mais tarde.');
     }
 });
+
 
 
 
@@ -233,12 +312,16 @@ async function carregarEventos() {
             eventoElement.innerHTML = `
                 <h3>${evento.nome}</h3>
                 <p><strong>Descrição:</strong> ${evento.descricao}</p>
-                <p><strong>Data:</strong> ${evento.data}</p>
-                <p><strong>Horário:</strong> ${evento.horario}</p>
+                <p><strong>Data:</strong> ${evento.data} <strong>Horário:</strong> ${evento.horario}</p>
                 <p><strong>Local:</strong> ${evento.local}</p>
                 <p><strong>Participantes:</strong> ${evento.participantes.join(', ')}</p>
-                <button onclick="editarEvento('${id}')">Editar</button>
-                <button onclick="excluirEvento('${id}')">Excluir</button>
+                <p><strong>Prioridade:</strong> ${evento.prioridade}</p> <!-- Adiciona a prioridade ao HTML -->
+                <table>
+                    <tr>
+                        <td><button onclick="editarEvento('${id}')" id="botaoEditar">Editar</button></td>
+                        <td><button onclick="excluirEvento('${id}')" id="botaoExcluir">Excluir</button></td>
+                    </tr>
+                </table>
             `;
             containerEventos.appendChild(eventoElement);
         });
