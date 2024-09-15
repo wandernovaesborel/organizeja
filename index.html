@@ -25,9 +25,12 @@
         </div>
 
         <!-- Container de CRUD de eventos -->
-        <div id="crudContainer">
-            <button id="botaoLogout">Logout</button>       
-           
+        <div id="crudContainer" style="display: none;">
+
+            <button id="confirmarApelido">Cadastrar apelido</button>
+            <h6>Olá, apelido!</h6>
+            <button id="botaoLogout">Logout</button>
+
             <h1>Adicionar Novo Evento</h1>
             <form id="formEvento" class="form-container">
                 <input type="text" id="inputNome" placeholder="Nome do Evento" required>
@@ -38,6 +41,12 @@
                 </div>
                 <input type="text" id="inputLocal" placeholder="Local do Evento" required>
                 <input type="text" id="inputParticipantes" placeholder="Participantes (separados por vírgula)">
+                <label for="inputPrioridade">Prioridade:</label>
+                <select id="inputPrioridade" name="prioridade" required>
+                    <option value="Alta">Alta</option>
+                    <option value="Média">Média</option>
+                    <option value="Baixa">Baixa</option>
+                </select>
                 <button type="submit">Adicionar Evento</button>
             </form>
 
@@ -59,6 +68,11 @@
                 <input type="time" id="inputEditHorario" required>
                 <input type="text" id="inputEditLocal" placeholder="Local do Evento" required>
                 <input type="text" id="inputEditParticipantes" placeholder="Participantes (separados por vírgula)">
+                <select id="inputEditPrioridade" name="prioridade">
+                    <option value="Alta">Alta</option>
+                    <option value="Média">Média</option>
+                    <option value="Baixa">Baixa</option>
+                </select>
                 <button type="submit">Salvar Alterações</button>
             </form>
         </div>
