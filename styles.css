@@ -1,5 +1,5 @@
 body {
-    background-color: #D2A8FF;
+    background-color: #ffffff;
     color: #A100FF;
     font-family: Arial, sans-serif;
     margin: 0;
@@ -12,15 +12,6 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px;
-}
-
-.form-container {
-    background-color: #D2A8FF;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 500px;
 }
 
 h1 {
@@ -38,21 +29,11 @@ input {
     box-sizing: border-box;
 }
 
-button {
-    width: 50%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
 input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="date"],
 input[type="time"] {
-    background-color: #D2A8FF;
     color: #2E16FF;
     border-bottom: 2px solid #A100FF;
 }
@@ -61,34 +42,98 @@ input[type="time"] {
     color: #2E16FF;
 }
 
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+/* Botões */
+
 button {
-    background-color: #6200EE;
-    color: #E0E0E0;
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #D2A8FF;
+    color: #A100FF;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #A100FF;
+    color: #D2A8FF;
+}
+
+/* confirmarApelido */
+
+#confirmarApelido {
+    background-color: #D2A8FF;
+    color: #A100FF;
+    cursor: pointer;
+    width: 30%;
+}
+
+#confirmarApelido:hover {
+    background-color: #A100FF;
+    color: #D2A8FF;
 }
 
 /* Botão LogOut */
 
 #botaoLogout {
-    background-color: #6200EE;
-    color: #E0E0E0;
+    background-color: #D2A8FF;
+    color: #A100FF;
     cursor: pointer;
     float: right;
     width: 15%;
 }
 
 #botaoLogout:hover {
-    background-color: #3700B3;
+    background-color: #A100FF;
+    color: #D2A8FF;
 }
 
-button:hover {
-    background-color: #3700B3;
+/* Botões Editar e Excluir */
+
+#botaoEditar, #botaoExcluir {
+    background-color: #D2A8FF;
+    color: #A100FF;
+    cursor: pointer;
+    width: 25%;
+}
+
+#botaoEditar {
+    float: right;
+}
+
+#botaoExcluir {
+    float: left;
+}
+
+#botaoEditar:hover, #botaoExcluir:hover {
+    background-color: #A100FF;
+    color: #D2A8FF;
+}
+
+/* Containers individuais */
+
+.form-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
 }
 
 .event-container {
     background-color: #D2A8FF;
-    border: 15px;
-    border-color: #3700B3;
     border-radius: 8px;
     padding: 20px;
     width: 100%;
@@ -97,7 +142,7 @@ button:hover {
 }
 
 .event-item {
-    background-color: #2C2C2C;
+    background-color: #ffffff;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 10px;
@@ -112,6 +157,15 @@ button:hover {
     margin: 5px 0;
     color: #B0B0B0;
 }
+
+/* Tabela */
+
+table {
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Modal - Adicionar evento */
 
 .modal {
     display: none;
