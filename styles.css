@@ -48,7 +48,9 @@ select {
     margin-bottom: 10px;
     border: none;
     border-radius: 4px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    color: #2E16FF;
+    border-bottom: 2px solid #A100FF;
 }
 
 /* Botões */
@@ -150,12 +152,12 @@ button:hover {
 
 .event-item h3 {
     margin: 0 0 10px;
-    color: #E0E0E0;
+    color: #2E16FF;
 }
 
 .event-item p {
     margin: 5px 0;
-    color: #B0B0B0;
+    color: #2E16FF;
 }
 
 /* Tabela */
