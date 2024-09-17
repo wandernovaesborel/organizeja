@@ -310,15 +310,25 @@ async function carregarEventos() {
             const eventoElement = document.createElement('div');
             eventoElement.className = 'event-item';
             eventoElement.innerHTML = `
-                <h3>${evento.nome}</h3>
-                <p><strong>Descrição:</strong> ${evento.descricao}</p>
-                <p><strong>Data:</strong> ${evento.data} <strong>Horário:</strong> ${evento.horario}</p>
-                <p><strong>Local:</strong> ${evento.local}</p>
-                <p><strong>Participantes:</strong> ${evento.participantes.join(', ')}</p>
-                <p><strong>Prioridade:</strong> ${evento.prioridade}</p> <!-- Adiciona a prioridade ao HTML -->
-                <table>
+                <table border=1>
                     <tr>
+                        <td><h3>${evento.nome}</h3></td>
+                        <td><p><strong>Data:</strong> ${evento.data} </p></td>
+                    </tr>
+                    <tr>
+                        <td><p><strong>Descrição:</strong> ${evento.descricao}</p></td>
+                        <td><p><strong>Horário:</strong> ${evento.horario}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><strong>Local:</strong> ${evento.local}</p></td>
+                        <td>Oi</td>
+                    </tr>
+                    <tr>
+                        <td><p><strong>Participantes:</strong> ${evento.participantes.join(', ')}</p></td>
                         <td><button onclick="editarEvento('${id}')" id="botaoEditar">Editar</button></td>
+                    </tr>
+                    <tr>
+                        <td><p><strong>Prioridade:</strong> ${evento.prioridade}</p> <!-- Adiciona a prioridade ao HTML --></td>
                         <td><button onclick="excluirEvento('${id}')" id="botaoExcluir">Excluir</button></td>
                     </tr>
                 </table>
