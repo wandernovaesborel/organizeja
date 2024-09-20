@@ -312,8 +312,8 @@ async function carregarEventos() {
             eventoElement.innerHTML = `
                 <table border=1>
                     <tr>
-                        <td><h3>${evento.nome}</h3></td>
-                        <td><p> ${evento.data} </p></td>
+                        <td width=85%><h3>${evento.nome}</h3></td>
+                        <td width=15%>><p> ${evento.data} </p></td>
                     </tr>
                     <tr>
                         <td><p><strong>Descrição:</strong> ${evento.descricao}</p></td>
