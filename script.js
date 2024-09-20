@@ -313,18 +313,18 @@ async function carregarEventos() {
                 <table border=1>
                     <tr>
                         <td width=85%><h3>${evento.nome}</h3></td>
-                        <td width=15%>><p> ${evento.data} </p></td>
+                        <td width=15%> ${evento.data} </td>
                     </tr>
                     <tr>
-                        <td><p><strong>Descrição:</strong> ${evento.descricao}</p></td>
-                        <td><p> ${evento.horario}</p></td>
+                        <td><strong>Descrição:</strong> ${evento.descricao}</td>
+                        <td> ${evento.horario} </td>
                     </tr>
                     <tr>
-                        <td><p><strong>Local:</strong> ${evento.local}</p></td>
-                        <td>Oi</td>
+                        <td><strong>Local:</strong> ${evento.local}</td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td><p><strong>Participantes:</strong> ${evento.participantes.join(', ')}</p></td>
+                        <td><strong>Participantes:</strong> ${evento.participantes.join(', ')} </td>
                         <td><button onclick="editarEvento('${id}')" id="botaoEditar">Editar</button></td>
                     </tr>
                     <tr>
