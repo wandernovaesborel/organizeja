@@ -313,11 +313,11 @@ async function carregarEventos() {
                 <table border=1>
                     <tr>
                         <td><h3>${evento.nome}</h3></td>
-                        <td><p><strong>Data:</strong> ${evento.data} </p></td>
+                        <td><p> ${evento.data} </p></td>
                     </tr>
                     <tr>
                         <td><p><strong>Descrição:</strong> ${evento.descricao}</p></td>
-                        <td><p><strong>Horário:</strong> ${evento.horario}</p></td>
+                        <td><p> ${evento.horario}</p></td>
                     </tr>
                     <tr>
                         <td><p><strong>Local:</strong> ${evento.local}</p></td>
