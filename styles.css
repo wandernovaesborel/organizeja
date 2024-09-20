@@ -110,13 +110,6 @@ button:hover {
     width: 25%;
 }
 
-#botaoEditar {
-    float: right;
-}
-
-#botaoExcluir {
-    float: left;
-}
 
 #botaoEditar:hover, #botaoExcluir:hover {
     background-color: #A100FF;
