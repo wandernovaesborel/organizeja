@@ -27,30 +27,36 @@
         <!-- Container de CRUD de eventos -->
         <div id="crudContainer" style="display: none;">
 
-            <button id="confirmarApelido">Cadastrar apelido</button>
-            <h6>Olá, apelido!</h6>
             <button id="botaoLogout">Logout</button>
 
             <h1>Adicionar Novo Evento</h1>
-            <form id="formEvento" class="form-container">
-                <input type="text" id="inputNome" placeholder="Nome do Evento" required>
-                <input type="text" id="inputDescricao" placeholder="Descrição do Evento" required>
-                <div class="date-time-container">
-                    <input type="date" id="inputData" required>
-                    <input type="time" id="inputHorario" required>
-                </div>
-                <input type="url" id="inputLocal" placeholder="Link" required>
-                <input type="text" id="inputParticipantes" placeholder="Participantes (separados por vírgula)">
-                <select id="inputPrioridade" name="prioridade" required>
-                    <option value="Alta">Prioridade Alta</option>
-                    <option value="Média">Prioridade Média</option>
-                    <option value="Baixa">Prioridade Baixa</option>
-                </select>
-                <button type="submit">Adicionar Evento</button>
-            </form>
+            
+            <button id="botaoAdicionarEvento">Adicionar Evento</button>
 
             <h1>Eventos Pendentes</h1>
             <div id="containerEventos" class="event-container"></div>
+        </div>
+    </div>
+
+    <!-- Modal para Adicionar Eventos -->
+    <div id="modalAdicionar" class="modal">
+        <div class="modal-content">
+            <span class="close" id="fecharModal">&times;</span>
+            <h2>Adicionar Evento</h2>
+            <form id="formEventoModal">
+                <input type="text" id="inputNome" placeholder="Nome do evento" required>
+                <input type="text" id="inputDescricao" placeholder="Descrição" required>
+                <input type="date" id="inputData" required>
+                <input type="time" id="inputHorario" required>
+                <input type="url" id="inputLocal" placeholder="Local (URL)" required>
+                <input type="text" id="inputParticipantes" placeholder="Participantes (separados por vírgula)" required>
+                <select id="inputPrioridade">
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média">Média</option>
+                    <option value="Alta">Alta</option>
+                </select>
+                <button type="submit">Adicionar Evento</button>
+            </form>
         </div>
     </div>
 
