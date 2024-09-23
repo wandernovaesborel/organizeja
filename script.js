@@ -324,30 +324,13 @@ async function carregarEventos() {
             eventoElement.className = 'event-item';
             eventoElement.style.border = `4px solid ${corBorda}`;
             eventoElement.innerHTML = `
-                <table border=1>
-                    <tr>
-                        <td width=80%><h3>${evento.nome}</h3></td>
-                        <td width=20%></td>
-                    </tr>
-                    <tr>
-                        <td><p>Evento marcado para o dia ${formatarData(evento.data)} às ${evento.horario}hs </p></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><p><strong>Descrição:</strong> ${evento.descricao} </p></td>
-                        <td style="text-align: right">  </td>
-                    </tr>
-                    <tr>
-                        <td><p><strong>Participantes:</strong> ${evento.participantes.join(', ')} </p></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><p><strong>Prioridade:</strong> ${evento.prioridade}</p> <!-- Adiciona a prioridade ao HTML --></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <br>
                 
+                <h2>${formatarData(evento.data)} às ${evento.horario}hs</h2>
+                <p><h3>${evento.nome}</h3>
+                <p><strong>Descrição:</strong> ${evento.descricao} </p>
+                <p><strong>Participantes:</strong> ${evento.participantes.join(', ')} </p>
+                
+                <br>
                 <button onclick="window.open('${evento.local}', '_blank')" id="botaoLocal" title="Clique para ver o local do evento">🗺️</button>
                 <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>
                 <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button>
