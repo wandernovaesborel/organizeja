@@ -312,24 +312,24 @@ async function carregarEventos() {
             eventoElement.innerHTML = `
                 <table border=1>
                     <tr>
-                        <td width=85%><h3>${evento.nome}</h3></td>
-                        <td width=15%> ${evento.data} </td>
+                        <td width=75%><h3>${evento.nome}</h3></td>
+                        <td width=25%> ${evento.data} </td>
                     </tr>
                     <tr>
                         <td><p><strong>Descrição:</strong> ${evento.descricao} </p></td>
                         <td> ${evento.horario} </td>
                     </tr>
                     <tr>
-                        <td><p><strong>Local:</strong> ${evento.local ? `<a href="${evento.local}" target="_blank">Link</a>` : ''} </p></td>
+                        <td><p><strong>Local:</strong> ${evento.local ? `<a href="${evento.local}" target="_blank">Ver local</a>` : ''} </p></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td><p><strong>Participantes:</strong> ${evento.participantes.join(', ')} </p></td>
-                        <td><button onclick="editarEvento('${id}')" id="botaoEditar">Editar</button></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><p><strong>Prioridade:</strong> ${evento.prioridade}</p> <!-- Adiciona a prioridade ao HTML --></td>
-                        <td><button onclick="excluirEvento('${id}')" id="botaoExcluir">Excluir</button></td>
+                        <td style="text-align: center; vertical-align: bottom;"><button onclick="${evento.local}" id="botaoLocal" title="Clique para ver o local do evento">📍</button>  <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>  <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button></td>
                     </tr>
                 </table>
             `;
