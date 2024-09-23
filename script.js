@@ -312,16 +312,12 @@ async function carregarEventos() {
             eventoElement.innerHTML = `
                 <table border=1>
                     <tr>
-                        <td width=75%><h3>${evento.nome}</h3></td>
-                        <td width=25%> ${evento.data} </td>
+                        <td width=80%><h3>${evento.nome}</h3></td>
+                        <td width=20% style="text-align: right"> ${evento.data} </td>
                     </tr>
                     <tr>
                         <td><p><strong>Descrição:</strong> ${evento.descricao} </p></td>
-                        <td> ${evento.horario} </td>
-                    </tr>
-                    <tr>
-                        <td><p><strong>Local:</strong> ${evento.local ? `<a href="${evento.local}" target="_blank">Ver local</a>` : ''} </p></td>
-                        <td></td>
+                        <td style="text-align: right"> ${evento.horario} </td>
                     </tr>
                     <tr>
                         <td><p><strong>Participantes:</strong> ${evento.participantes.join(', ')} </p></td>
@@ -329,13 +325,15 @@ async function carregarEventos() {
                     </tr>
                     <tr>
                         <td><p><strong>Prioridade:</strong> ${evento.prioridade}</p> <!-- Adiciona a prioridade ao HTML --></td>
-                        <td style="text-align: center; vertical-align: bottom;">
-                            <button onclick="window.open('${evento.local}', '_blank')" title="Clique para ver o local do evento">📍</button>
-                            <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>
-                            <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button>
-                        </td>
+                        <td></td>
                     </tr>
                 </table>
+                <br>
+                
+                <button onclick="window.open('${evento.local}', '_blank')" id="botaoLocal" title="Clique para ver o local do evento">🗺️</button>
+                <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>
+                <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button>
+                        
             `;
             containerEventos.appendChild(eventoElement);
         });
