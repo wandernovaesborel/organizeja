@@ -24,8 +24,6 @@ const auth = getAuth(app);
 
 let usuarioAtual = null;
 
-
-
 // Função de autenticação de usuários
 document.getElementById('formLogin').addEventListener('submit', async function (evento) {
     evento.preventDefault();
@@ -39,8 +37,6 @@ document.getElementById('formLogin').addEventListener('submit', async function (
         alert('Erro ao fazer login. Verifique suas credenciais.');
     }
 });
-
-
 
 // Função de cadastro de novos usuários
 document.getElementById('botaoCadastro').addEventListener('click', async function () {
@@ -57,8 +53,6 @@ document.getElementById('botaoCadastro').addEventListener('click', async functio
     }
 });
 
-
-
 // Função de logout
 document.getElementById('botaoLogout').addEventListener('click', async function () {
     try {
@@ -69,8 +63,6 @@ document.getElementById('botaoLogout').addEventListener('click', async function 
         alert('Erro ao fazer logout.');
     }
 });
-
-
 
 // Verifica se há um usuário autenticado
 onAuthStateChanged(auth, (usuario) => {
@@ -88,59 +80,23 @@ onAuthStateChanged(auth, (usuario) => {
 
 
 
-// Função para editar evento
-window.editarApelido = async function (id) {
-    const modal = document.getElementById('modalEdicao');
-    const span = document.getElementsByClassName('close')[0];
-    const eventoId = document.getElementById('inputEventoId');
-    const inputNome = document.getElementById('inputEditNome');
-    const inputDescricao = document.getElementById('inputEditDescricao');
-    const inputData = document.getElementById('inputEditData');
-    const inputHorario = document.getElementById('inputEditHorario');
-    const inputLocal = document.getElementById('inputEditLocal');
-    const inputParticipantes = document.getElementById('inputEditParticipantes');
-    const selectPrioridade = document.getElementById('inputEditPrioridade'); // Novo campo de prioridade
+// Exibir o modal
+document.getElementById('botaoAdicionarEvento').addEventListener('click', function () {
+    document.getElementById('modalAdicionar').style.display = 'block';
+});
 
-    modal.style.display = 'flex';
+// Fechar o modal
+document.getElementById('fecharModal').addEventListener('click', function () {
+    document.getElementById('modalAdicionar').style.display = 'none';
+});
 
-    span.onclick = function () {
+// Fechar o modal ao clicar fora dele
+window.addEventListener('click', function (event) {
+    const modal = document.getElementById('modalAdicionar');
+    if (event.target === modal) {
         modal.style.display = 'none';
     }
-
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-
-    if (id) {
-        try {
-            const eventoRef = doc(db, 'eventos', id);
-            const eventoSnap = await getDoc(eventoRef);
-            if (eventoSnap.exists()) {
-                const evento = eventoSnap.data();
-                if (evento.usuarioId === usuarioAtual) { // Verifica se o evento pertence ao usuário atual
-                    eventoId.value = id;
-                    inputNome.value = evento.nome;
-                    inputDescricao.value = evento.descricao;
-                    inputData.value = evento.data;
-                    inputHorario.value = evento.horario;
-                    inputLocal.value = evento.local;
-                    inputParticipantes.value = evento.participantes.join(', ');
-                    selectPrioridade.value = evento.prioridade; // Preenche o campo de prioridade
-                } else {
-                    alert('Você não tem permissão para editar este evento.');
-                    modal.style.display = 'none';
-                }
-            }
-        } catch (erro) {
-            console.error('Erro ao carregar dados do evento:', erro);
-            alert('Erro ao carregar dados do evento.');
-        }
-    }
-}
-
-
+});
 
 // Função para adicionar evento
 document.getElementById('formEvento').addEventListener('submit', async function (evento) {
