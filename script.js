@@ -99,15 +99,18 @@ window.addEventListener('click', function (event) {
 });
 
 // Função para adicionar evento
-document.getElementById('formEvento').addEventListener('submit', async function (evento) {
+document.getElementById('formEventoModal').addEventListener('submit', async function (evento) {
     evento.preventDefault();
+    
     const nome = document.getElementById('inputNome').value;
     const descricao = document.getElementById('inputDescricao').value;
     const data = document.getElementById('inputData').value;
     const horario = document.getElementById('inputHorario').value;
     const local = document.getElementById('inputLocal').value;
     const participantes = document.getElementById('inputParticipantes').value.split(',').map(p => p.trim());
-    const prioridade = document.getElementById('inputPrioridade').value; // Adiciona a prioridade
+    const prioridade = document.getElementById('inputPrioridade').value;
+
+    console.log('Adicionando evento:', { nome, descricao, data, horario, local, participantes, prioridade });
 
     try {
         await addDoc(collection(db, 'eventos'), {
@@ -117,17 +120,19 @@ document.getElementById('formEvento').addEventListener('submit', async function 
             horario,
             local,
             participantes,
-            prioridade, // Adiciona a prioridade ao documento
+            prioridade,
             usuarioId: usuarioAtual
         });
         alert('Evento adicionado com sucesso!');
-        document.getElementById('formEvento').reset();
-        carregarEventos();
+        document.getElementById('formEventoModal').reset();
+        carregarEventos(); // Atualiza a lista de eventos
+        document.getElementById('modalAdicionar').style.display = 'none'; // Fecha o modal
     } catch (erro) {
         console.error('Erro ao adicionar evento:', erro);
         alert('Erro ao adicionar evento. Tente novamente mais tarde.');
     }
 });
+
 
 
 
