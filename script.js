@@ -329,7 +329,11 @@ async function carregarEventos() {
                     </tr>
                     <tr>
                         <td><p><strong>Prioridade:</strong> ${evento.prioridade}</p> <!-- Adiciona a prioridade ao HTML --></td>
-                        <td style="text-align: center; vertical-align: bottom;"><button onclick="${evento.local}" id="botaoLocal" title="Clique para ver o local do evento">📍</button>  <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>  <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button></td>
+                        <td style="text-align: center; vertical-align: bottom;">
+                            <button onclick="window.open('${evento.local}', '_blank')" title="Clique para ver o local do evento">📍</button>
+                            <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>
+                            <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button>
+                        </td>
                     </tr>
                 </table>
             `;
