@@ -27,15 +27,6 @@ h2 {
     float: right;
 }
 
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -70,31 +61,31 @@ button {
     cursor: pointer;
 }
 
-/* confirmarApelido */
-
-#confirmarApelido {
-    background-color: #D2A8FF;
-    color: #A100FF;
-    cursor: pointer;
-    width: 30%;
-}
-
-#confirmarApelido:hover {
-    background-color: #A100FF;
-    color: #D2A8FF;
-}
-
 /* Botão LogOut */
 
 #botaoLogout {
     background-color: #D2A8FF;
     color: #A100FF;
     cursor: pointer;
-    float: right;
     width: 15%;
 }
 
 #botaoLogout:hover {
+    background-color: #A100FF;
+    color: #D2A8FF;
+}
+
+/* Botão Adicionar Evento */
+
+#botaoAdicionarEvento {
+    background-color: #D2A8FF;
+    color: #A100FF;
+    cursor: pointer;
+    width: 40px;
+    font-size: 24px;
+}
+
+#botaoAdicionarEvento:hover {
     background-color: #A100FF;
     color: #D2A8FF;
 }
@@ -112,6 +103,8 @@ button {
     background-color: #A100FF;
     color: #D2A8FF;
 }
+
+
 
 /* Containers individuais */
 
@@ -167,7 +160,7 @@ button {
 }
 
 .modal-content {
-    background-color: #1F1F1F;
+    background-color: #D2A8FF;
     border-radius: 8px;
     padding: 20px;
     margin: 15% auto;
@@ -176,8 +169,14 @@ button {
 }
 
 .modal-content input {
-    background-color: #333;
-    color: #E0E0E0;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #2E16FF;
+    border-bottom: 2px solid #A100FF;
 }
 
 .close {
