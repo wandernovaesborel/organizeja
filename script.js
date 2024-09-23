@@ -2,6 +2,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/fireba
 import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc, query, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
+function formatarData(dataISO) {
+    const [ano, mes, dia] = dataISO.split('-'); // Divide a string ISO em partes
+    return `${String(dia).padStart(2, '0')}/${String(mes).padStart(2, '0')}/${ano}`; // Retorna a data no formato DD/MM/AAAA
+}
+
 // Configurações do Firebase
 const configuracaoFirebase = {
     apiKey: "AIzaSyCS7_vKtYKJfIK2B_rY-6Li4qGONysAYbw",
@@ -307,17 +312,30 @@ async function carregarEventos() {
         querySnapshot.forEach((doc) => {
             const evento = doc.data();
             const id = doc.id;
+            // Mapeia a prioridade para as cores
+            const coresPrioridade = {
+               "Baixa": "green",
+                "Média": "yellow",
+                "Alta": "red"
+            };
+            // Obtém a cor com base na prioridade do evento
+            const corBorda = coresPrioridade[evento.prioridade] || "black"; // Define padrão como preto se a prioridade não for reconhecida
             const eventoElement = document.createElement('div');
             eventoElement.className = 'event-item';
+            eventoElement.style.border = `4px solid ${corBorda}`;
             eventoElement.innerHTML = `
                 <table border=1>
                     <tr>
                         <td width=80%><h3>${evento.nome}</h3></td>
-                        <td width=20% style="text-align: right"> ${evento.data} </td>
+                        <td width=20%></td>
+                    </tr>
+                    <tr>
+                        <td><p>Evento marcado para o dia ${formatarData(evento.data)} às ${evento.horario}hs </p></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><p><strong>Descrição:</strong> ${evento.descricao} </p></td>
-                        <td style="text-align: right"> ${evento.horario} </td>
+                        <td style="text-align: right">  </td>
                     </tr>
                     <tr>
                         <td><p><strong>Participantes:</strong> ${evento.participantes.join(', ')} </p></td>
