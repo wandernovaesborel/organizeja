@@ -10,7 +10,8 @@
 
 <body>
 
-    
+
+
     
     <div class="container">
         <!-- Container de autenticação -->
@@ -28,12 +29,9 @@
         <div id="crudContainer" style="display: none;">
 
             <button id="botaoLogout">Logout</button>
-
-            <h1>Adicionar Novo Evento</h1>
-            
-            <button id="botaoAdicionarEvento">Adicionar Evento</button>
-
+            <p><button id="botaoAdicionarEvento">+</button></p>
             <h1>Eventos Pendentes</h1>
+
             <div id="containerEventos" class="event-container"></div>
         </div>
     </div>
@@ -42,12 +40,16 @@
     <div id="modalAdicionar" class="modal">
         <div class="modal-content">
             <span class="close" id="fecharModal">&times;</span>
-            <h2>Adicionar Evento</h2>
+            <h1>Preencha as informações do evento</h1>
             <form id="formEventoModal">
                 <input type="text" id="inputNome" placeholder="Nome do evento" required>
                 <input type="text" id="inputDescricao" placeholder="Descrição" required>
-                <input type="date" id="inputData" required>
-                <input type="time" id="inputHorario" required>
+                <table width="100%">
+                    <tr>
+                        <td width="50%"><input type="date" id="inputData" required></td>
+                        <td width="50%"><input type="time" id="inputHorario" required></td>
+                    </tr>
+                </table>
                 <input type="url" id="inputLocal" placeholder="Local (URL)" required>
                 <input type="text" id="inputParticipantes" placeholder="Participantes (separados por vírgula)" required>
                 <select id="inputPrioridade">
