@@ -20,6 +20,13 @@ h1 {
     margin-bottom: 20px;
 }
 
+h2 {
+    color: #A100FF;
+    font-size: 12px;
+    margin-bottom: 20px;
+    float: right;
+}
+
 input {
     width: 100%;
     padding: 10px;
@@ -33,7 +40,8 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="date"],
-input[type="time"] {
+input[type="time"],
+input[type="url"] {
     color: #2E16FF;
     border-bottom: 2px solid #A100FF;
 }
@@ -56,20 +64,10 @@ select {
 /* Botões */
 
 button {
-    width: 50%;
     padding: 10px;
-    margin-bottom: 10px;
     border: none;
     border-radius: 4px;
-    box-sizing: border-box;
-    background-color: #D2A8FF;
-    color: #A100FF;
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #A100FF;
-    color: #D2A8FF;
 }
 
 /* confirmarApelido */
@@ -101,17 +99,16 @@ button:hover {
     color: #D2A8FF;
 }
 
-/* Botões Editar e Excluir */
+/* Botões Local / Editar / Excluir */
 
-#botaoEditar, #botaoExcluir {
+#botaoEditar, #botaoExcluir, #botaoLocal {
     background-color: #D2A8FF;
     color: #A100FF;
     cursor: pointer;
-    width: 100px;
+    width: 40px;
 }
 
-
-#botaoEditar:hover, #botaoExcluir:hover {
+#botaoEditar:hover, #botaoExcluir:hover, #botaoLocal:hover {
     background-color: #A100FF;
     color: #D2A8FF;
 }
@@ -151,13 +148,6 @@ button:hover {
 .event-item p {
     margin: 5px 0;
     color: #2E16FF;
-}
-
-/* Tabela */
-
-table {
-    margin: 0 auto;
-    width: 100%;
 }
 
 /* Modal - Adicionar evento */
