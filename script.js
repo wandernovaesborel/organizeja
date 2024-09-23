@@ -320,7 +320,7 @@ async function carregarEventos() {
                         <td> ${evento.horario} </td>
                     </tr>
                     <tr>
-                        <td><p><strong>Local:</strong> ${evento.local} </p></td>
+                        <td><p><strong>Local:</strong> ${evento.local ? `<a href="${evento.local}" target="_blank">Link</a>` : ''} </p></td>
                         <td></td>
                     </tr>
                     <tr>
