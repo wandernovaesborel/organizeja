@@ -4,42 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda de Eventos com Firebase e Autenticação</title>
+    <title>Organize Já - Agenda de Eventos</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-
-
-    
     <div class="container">
         <!-- Container de autenticação -->
         <div id="authContainer" class="form-container">
-            <h1>Login</h1>
+            <h3>Organize Já
+            <br>2024</h3>
             <form id="formLogin">
-                <input type="email" id="inputEmail" placeholder="E-mail" required>
-                <input type="password" id="inputSenha" placeholder="Senha" required>
-                <button type="submit">Login</button>
+                <p><input type="email" id="inputEmail" placeholder="E-mail" required></p>
+                <p><input type="password" id="inputSenha" placeholder="Senha" required></p>
+                <p><button type="submit" class="outros">Abrir Agenda</button></p>
             </form>
-            <button id="botaoCadastro">Cadastrar Novo Usuário</button>
+            <hr>
+            <h2>Ainda não tem uma conta?</h2>
+            
+            <p><button id="botaoCadastro" class="outros">Cadastre E-mail e Senha</button></p>
+            
+            <h2><p>Ou escolha uma das opções abaixo para login:</p></h2>
+            <p><img src="imagens/login_gmail.png"></p>
+            <p><img src="imagens/login_facebook.png"></p>
+            <p><img src="imagens/login_apple.png"></p>
+
+            <h4><br><br>Copyright © OrganizeJá 2024</h4>
         </div>
+
+        
 
         <!-- Container de CRUD de eventos -->
         <div id="crudContainer" style="display: none;">
 
-            <button id="botaoLogout">Logout</button>
-            <p><button id="botaoAdicionarEvento">+</button></p>
-            <h1>Eventos Pendentes</h1>
+            <table width="100%">
+                <tr>
+                    <td>
+                        <button id="botaoLogout">Logout</button>
+                        <button id="cadastrarApelido">Apelido</button>
+                    </td>
+                    <td style="text-align: right"><div id="mensagemApelido"></div></td>
+                </tr>
+            </table>           
+
+            <p>
+            <table width="100%">
+                <tr>
+                    <td><h3>Eventos Pendentes</h3></td>
+                    <td style="text-align: right"><button id="botaoAdicionarEvento" title="Clique para adicionar um novo evento">+</button></td>
+                </tr>
+            </table>
+        </p>
 
             <div id="containerEventos" class="event-container"></div>
+        </div>
+    </div>
+
+    <!-- Modal para Adicionar Apelido -->
+    <div id="modalApelido" class="modal">
+        <div class="modal-content">
+            <span class="close" id="fecharModalApelido">&times;</span>
+            <h1>Qual nome você prefere usar?</h1>
+            <form id="formApelidoModal">
+                <input type="text" id="inputApelido" required>
+                <button type="submit" class="outros">Adicionar Apelido</button>
+            </form>
         </div>
     </div>
 
     <!-- Modal para Adicionar Eventos -->
     <div id="modalAdicionar" class="modal">
         <div class="modal-content">
-            <span class="close" id="fecharModal">&times;</span>
+            <span class="close" id="fecharModalAdicionar">&times;</span>
             <h1>Preencha as informações do evento</h1>
             <form id="formEventoModal">
                 <input type="text" id="inputNome" placeholder="Nome do evento" required>
@@ -57,7 +96,7 @@
                     <option value="Média">Média</option>
                     <option value="Alta">Alta</option>
                 </select>
-                <button type="submit">Adicionar Evento</button>
+                <button type="submit" class="outros">Adicionar Evento</button>
             </form>
         </div>
     </div>
@@ -65,22 +104,26 @@
     <!-- Modal para Edição de Eventos -->
     <div id="modalEdicao" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" id="fecharModalEdicao">&times;</span>
             <h1>Editar Evento</h1>
             <form id="formEditEvento">
                 <input type="hidden" id="inputEventoId">
                 <input type="text" id="inputEditNome" placeholder="Nome do Evento" required>
                 <input type="text" id="inputEditDescricao" placeholder="Descrição do Evento" required>
-                <input type="date" id="inputEditData" required>
-                <input type="time" id="inputEditHorario" required>
-                <input type="text" id="inputEditLocal" placeholder="Local do Evento" required>
-                <input type="text" id="inputEditParticipantes" placeholder="Participantes (separados por vírgula)">
-                <select id="inputEditPrioridade" name="prioridade">
-                    <option value="Alta">Prioridade Alta</option>
-                    <option value="Média">Prioridade Média</option>
-                    <option value="Baixa">Prioridade Baixa</option>
+                <table width="100%">
+                    <tr>
+                        <td width="50%"><input type="date" id="inputEditData" required></td>
+                        <td width="50%"><input type="time" id="inputEditHorario" required></td>
+                    </tr>
+                </table>
+                <input type="url" id="inputEditLocal" placeholder="Local (URL)" required>
+                <input type="text" id="inputEditParticipantes" placeholder="Participantes (separados por vírgula)" required>
+                <select id="inputEditPrioridade">
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média">Média</option>
+                    <option value="Alta">Alta</option>
                 </select>
-                <button type="submit">Salvar Alterações</button>
+                <button type="submit" class="outros">Salvar Alterações</button>
             </form>
         </div>
     </div>
