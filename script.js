@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/fireba
 import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, getDoc, query, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
+
 function formatarData(dataISO) {
     const [ano, mes, dia] = dataISO.split('-'); // Divide a string ISO em partes
     return `${String(dia).padStart(2, '0')}/${String(mes).padStart(2, '0')}/${ano}`; // Retorna a data no formato DD/MM/AAAA
@@ -80,23 +81,126 @@ onAuthStateChanged(auth, (usuario) => {
 
 
 
-// Exibir o modal
+// Exibir o modal de adicionar evento
 document.getElementById('botaoAdicionarEvento').addEventListener('click', function () {
     document.getElementById('modalAdicionar').style.display = 'block';
 });
 
-// Fechar o modal
-document.getElementById('fecharModal').addEventListener('click', function () {
-    document.getElementById('modalAdicionar').style.display = 'none';
+// Exibir o modal de adicionar apelido
+document.getElementById('cadastrarApelido').addEventListener('click', function () {
+    document.getElementById('modalApelido').style.display = 'block';
+});
+
+// Função para fechar modais
+function fecharModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Fechar o modal de evento ao clicar no botão de fechar
+document.getElementById('fecharModalAdicionar').addEventListener('click', function () {
+    fecharModal('modalAdicionar');
+});
+
+// Fechar o modal de apelido ao clicar no botão de fechar
+document.getElementById('fecharModalApelido').addEventListener('click', function () {
+    fecharModal('modalApelido');
 });
 
 // Fechar o modal ao clicar fora dele
 window.addEventListener('click', function (event) {
-    const modal = document.getElementById('modalAdicionar');
-    if (event.target === modal) {
-        modal.style.display = 'none';
+    const modalAdicionar = document.getElementById('modalAdicionar');
+    const modalApelido = document.getElementById('modalApelido');
+    
+    if (event.target === modalAdicionar) {
+        fecharModal('modalAdicionar');
+    } else if (event.target === modalApelido) {
+        fecharModal('modalApelido');
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+// Função para adicionar apelido
+document.getElementById('formApelidoModal').addEventListener('submit', async function (eventoapelido) {
+    eventoapelido.preventDefault();
+
+    const apelido = document.getElementById('inputApelido').value;
+
+    console.log('Verificando apelido:', { apelido });
+
+    try {
+        const querySnapshot = await getDocs(query(collection(db, 'apelidos'), where('usuarioId', '==', usuarioAtual)));
+
+        if (!querySnapshot.empty) {
+            alert('Você já tem um apelido cadastrado.');
+            return;
+        }
+
+        await addDoc(collection(db, 'apelidos'), {
+            apelido,
+            usuarioId: usuarioAtual
+        });
+
+        alert('Apelido cadastrado com sucesso!');
+        exibirApelido(); // Atualiza a mensagem com o novo apelido
+        document.getElementById('modalApelido').style.display = 'none';
+    } catch (erro) {
+        console.error('Erro ao cadastrar apelido:', erro);
+        alert('Erro ao cadastrar apelido. Tente novamente mais tarde.');
+    }
+});
+
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        usuarioAtual = user.uid;
+        await new Promise(resolve => setTimeout(resolve, 100)); // Atraso de 100ms
+        exibirApelido(); // Chama a função para exibir o apelido
+    } else {
+        usuarioAtual = null;
+        document.getElementById('mensagemApelido').innerText = '';
+    }
+});
+
+
+// Função para exibir o apelido
+async function exibirApelido() {
+    console.log('Verificando apelido para o usuário:', usuarioAtual);
+    try {
+        const apelidosRef = collection(db, 'apelidos');
+        const querySnapshot = await getDocs(query(apelidosRef, where('usuarioId', '==', usuarioAtual)));
+        
+        if (!querySnapshot.empty) {
+            const apelidoDoc = querySnapshot.docs[0].data();
+            const apelido = apelidoDoc.apelido;
+
+            // Exibir a mensagem
+            document.getElementById('mensagemApelido').innerText = `Olá, ${apelido}!`;
+            console.log('Apelido encontrado:', apelido);
+        } else {
+            document.getElementById('mensagemApelido').innerText = 'Olá!';
+            console.log('Nenhum apelido encontrado.');
+        }
+    } catch (error) {
+        console.error('Erro ao buscar apelido:', error);
+    }
+}
+
+// Chamar a função quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', exibirApelido);
+
+
+
+
 
 // Função para adicionar evento
 document.getElementById('formEventoModal').addEventListener('submit', async function (evento) {
@@ -139,55 +243,90 @@ document.getElementById('formEventoModal').addEventListener('submit', async func
 // Função para editar evento
 window.editarEvento = async function (id) {
     const modal = document.getElementById('modalEdicao');
-    const span = document.getElementsByClassName('close')[0];
-    const eventoId = document.getElementById('inputEventoId');
-    const inputNome = document.getElementById('inputEditNome');
-    const inputDescricao = document.getElementById('inputEditDescricao');
-    const inputData = document.getElementById('inputEditData');
-    const inputHorario = document.getElementById('inputEditHorario');
-    const inputLocal = document.getElementById('inputEditLocal');
-    const inputParticipantes = document.getElementById('inputEditParticipantes');
-    const selectPrioridade = document.getElementById('inputEditPrioridade'); // Novo campo de prioridade
+    const fecharModalEdicao = document.getElementById('fecharModalEdicao');
 
-    modal.style.display = 'flex';
+    // Abre o modal
+    modal.style.display = 'block';
 
-    span.onclick = function () {
+    // Fechar modal quando clicar no botão de fechar
+    fecharModalEdicao.onclick = function () {
         modal.style.display = 'none';
     }
 
+    // Fechar modal quando clicar fora do conteúdo
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = 'none';
         }
     }
 
+    // Se houver um ID, busca os dados do evento no Firestore
     if (id) {
         try {
             const eventoRef = doc(db, 'eventos', id);
             const eventoSnap = await getDoc(eventoRef);
+
             if (eventoSnap.exists()) {
                 const evento = eventoSnap.data();
-                if (evento.usuarioId === usuarioAtual) { // Verifica se o evento pertence ao usuário atual
-                    eventoId.value = id;
-                    inputNome.value = evento.nome;
-                    inputDescricao.value = evento.descricao;
-                    inputData.value = evento.data;
-                    inputHorario.value = evento.horario;
-                    inputLocal.value = evento.local;
-                    inputParticipantes.value = evento.participantes.join(', ');
-                    selectPrioridade.value = evento.prioridade; // Preenche o campo de prioridade
-                } else {
-                    alert('Você não tem permissão para editar este evento.');
-                    modal.style.display = 'none';
-                }
+
+                // Preenche os campos do formulário com os dados do evento
+                document.getElementById('inputEventoId').value = id;
+                document.getElementById('inputEditNome').value = evento.nome;
+                document.getElementById('inputEditDescricao').value = evento.descricao;
+                document.getElementById('inputEditData').value = evento.data;
+                document.getElementById('inputEditHorario').value = evento.horario;
+                document.getElementById('inputEditLocal').value = evento.local;
+                document.getElementById('inputEditParticipantes').value = evento.participantes.join(', ');
+                document.getElementById('inputEditPrioridade').value = evento.prioridade;
             }
         } catch (erro) {
             console.error('Erro ao carregar dados do evento:', erro);
-            alert('Erro ao carregar dados do evento.');
+            alert('Erro ao carregar os dados do evento.');
         }
     }
-}
+};
 
+
+
+
+
+
+
+
+
+// Função para salvar alterações do evento
+document.getElementById('formEditEvento').addEventListener('submit', async function (evento) {
+    evento.preventDefault();
+
+    const id = document.getElementById('inputEventoId').value;
+    const nome = document.getElementById('inputEditNome').value;
+    const descricao = document.getElementById('inputEditDescricao').value;
+    const data = document.getElementById('inputEditData').value;
+    const horario = document.getElementById('inputEditHorario').value;
+    const local = document.getElementById('inputEditLocal').value;
+    const participantes = document.getElementById('inputEditParticipantes').value.split(',').map(p => p.trim());
+    const prioridade = document.getElementById('inputEditPrioridade').value;
+
+    try {
+        const eventoRef = doc(db, 'eventos', id);
+        await updateDoc(eventoRef, {
+            nome,
+            descricao,
+            data,
+            horario,
+            local,
+            participantes,
+            prioridade
+        });
+
+        alert('Evento atualizado com sucesso!');
+        document.getElementById('modalEdicao').style.display = 'none';
+        carregarEventos(); // Atualiza a lista de eventos
+    } catch (erro) {
+        console.error('Erro ao atualizar evento:', erro);
+        alert('Erro ao atualizar o evento.');
+    }
+});
 
 
 
@@ -217,51 +356,6 @@ window.excluirEvento = async function (id) {
 
 
 
-
-// Função para salvar alterações do evento
-document.getElementById('formEditEvento').addEventListener('submit', async function (evento) {
-    evento.preventDefault();
-    const id = document.getElementById('inputEventoId').value;
-    const nome = document.getElementById('inputEditNome').value;
-    const descricao = document.getElementById('inputEditDescricao').value;
-    let data = document.getElementById('inputEditData').value;
-    const horario = document.getElementById('inputEditHorario').value;
-    const local = document.getElementById('inputEditLocal').value;
-    const participantes = document.getElementById('inputEditParticipantes').value.split(',').map(p => p.trim());
-    const prioridade = document.getElementById('inputEditPrioridade').value; // Adiciona a prioridade
-
-    try {
-        const eventoRef = doc(db, 'eventos', id);
-        const eventoSnap = await getDoc(eventoRef);
-        if (eventoSnap.exists()) {
-            const evento = eventoSnap.data();
-            if (evento.usuarioId === usuarioAtual) { // Verifica se o evento pertence ao usuário atual
-                await updateDoc(eventoRef, {
-                    nome,
-                    descricao,
-                    data,
-                    horario,
-                    local,
-                    participantes,
-                    prioridade // Atualiza a prioridade
-                });
-                alert('Evento atualizado com sucesso!');
-                document.getElementById('modalEdicao').style.display = 'none';
-                carregarEventos();
-            } else {
-                alert('Você não tem permissão para atualizar este evento.');
-                document.getElementById('modalEdicao').style.display = 'none';
-            }
-        }
-    } catch (erro) {
-        console.error('Erro ao atualizar evento:', erro);
-        alert('Erro ao atualizar evento. Tente novamente mais tarde.');
-    }
-});
-
-
-
-
 // Função para carregar eventos do usuário atual
 async function carregarEventos() {
     const containerEventos = document.getElementById('containerEventos');
@@ -285,17 +379,40 @@ async function carregarEventos() {
             eventoElement.className = 'event-item';
             eventoElement.style.border = `4px solid ${corBorda}`;
             eventoElement.innerHTML = `
-                
-                <h2>${formatarData(evento.data)} às ${evento.horario}hs</h2>
-                <p><h3>${evento.nome}</h3>
-                <p><strong>Descrição:</strong> ${evento.descricao} </p>
-                <p><strong>Participantes:</strong> ${evento.participantes.join(', ')} </p>
-                
-                <br>
-                <button onclick="window.open('${evento.local}', '_blank')" id="botaoLocal" title="Clique para ver o local do evento">🗺️</button>
-                <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>
-                <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button>
-                        
+                <table width="100%">
+                    <tr>
+                        <td width="70%"><h5>${evento.nome}</h5></td>
+                        <td width="30%"><h2>${formatarData(evento.data)} às ${evento.horario}hs</h2></td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Participantes:</h6> ${evento.participantes.join(', ')} </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Descrição:</h6> ${evento.descricao} </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button onclick="window.open('${evento.local}', '_blank')" id="botaoLocal" title="Clique para ver o local do evento">🗺️</button>
+                            <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>
+                            <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button>  
+                        </td>
+                         <td></td>
+                    </tr>
+                </table>
             `;
             containerEventos.appendChild(eventoElement);
         });
@@ -304,3 +421,4 @@ async function carregarEventos() {
         alert('Erro ao carregar eventos. Tente novamente mais tarde.');
     }
 }
+
