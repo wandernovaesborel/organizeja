@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Organize Já - Agenda de Eventos</title>
     <link rel="stylesheet" href="styles.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 <body>
@@ -28,9 +32,9 @@
             <p><button id="botaoCadastro" class="outros">Cadastre E-mail e Senha</button></p>
             
             <h2><p>Ou escolha uma das opções abaixo para login:</p></h2>
-            <p><img src="imagens/login_gmail.png"></p>
-            <p><img src="imagens/login_facebook.png"></p>
-            <p><img src="imagens/login_apple.png"></p>
+            <p><img src="imagens/login_gmail.png" class="login"></p>
+            <p><img src="imagens/login_facebook.png" class="login"></p>
+            <p><img src="imagens/login_apple.png" class="login"></p>
 
             <h4><br><br>Copyright © OrganizeJá 2024</h4>
         </div>
@@ -38,7 +42,7 @@
         
 
         <!-- Container de CRUD de eventos -->
-        <div id="crudContainer" style="display: none;">
+        <div id="crudContainer" style="display: none;" class="form-container2">
 
             <table width="100%">
                 <tr>
@@ -50,16 +54,25 @@
                 </tr>
             </table>           
 
+            <a href="https://www.crunchyroll.com/pt-br/" target="_blank">
+            <p><img src="imagens/propaganda_crunchyroll.jpg" class="propaganda"></p>
+            </a>
+
             <p>
             <table width="100%">
                 <tr>
-                    <td><h3>Eventos Pendentes</h3></td>
+                    <td><h3>Compromissos Pendentes</h3></td>
                     <td style="text-align: right"><button id="botaoAdicionarEvento" title="Clique para adicionar um novo evento">+</button></td>
                 </tr>
             </table>
-        </p>
+            </p>
 
             <div id="containerEventos" class="event-container"></div>
+
+            <a href="https://ucicinemas.com.br" target="_blank">
+            <p><img src="imagens/propaganda_uci_cinemas.jpg" class="propaganda"></p>
+            </a>
+
         </div>
     </div>
 
@@ -70,7 +83,7 @@
             <h1>Qual nome você prefere usar?</h1>
             <form id="formApelidoModal">
                 <input type="text" id="inputApelido" required>
-                <button type="submit" class="outros">Adicionar Apelido</button>
+                <button type="submit" class="outros">Atualizar</button>
             </form>
         </div>
     </div>
@@ -79,7 +92,7 @@
     <div id="modalAdicionar" class="modal">
         <div class="modal-content">
             <span class="close" id="fecharModalAdicionar">&times;</span>
-            <h1>Preencha as informações do evento</h1>
+            <h1>Preencha as informações abaixo</h1>
             <form id="formEventoModal">
                 <input type="text" id="inputNome" placeholder="Nome do evento" required>
                 <input type="text" id="inputDescricao" placeholder="Descrição" required>
@@ -96,7 +109,7 @@
                     <option value="Média">Média</option>
                     <option value="Alta">Alta</option>
                 </select>
-                <button type="submit" class="outros">Adicionar Evento</button>
+                <button type="submit" class="outros">Adicionar Compromisso</button>
             </form>
         </div>
     </div>
@@ -105,7 +118,7 @@
     <div id="modalEdicao" class="modal">
         <div class="modal-content">
             <span class="close" id="fecharModalEdicao">&times;</span>
-            <h1>Editar Evento</h1>
+            <h1>Editar Compromisso</h1>
             <form id="formEditEvento">
                 <input type="hidden" id="inputEventoId">
                 <input type="text" id="inputEditNome" placeholder="Nome do Evento" required>
