@@ -39,6 +39,8 @@ document.getElementById('formLogin').addEventListener('submit', async function (
     }
 });
 
+
+
 // Função de cadastro de novos usuários
 document.getElementById('botaoCadastro').addEventListener('click', async function () {
     const email = prompt('Digite seu e-mail:');
@@ -120,46 +122,44 @@ window.addEventListener('click', function (event) {
 
 
 
-
-
-
-
-
-
-
-
-
-// Função para adicionar apelido
+// Função para adicionar ou substituir apelido
 document.getElementById('formApelidoModal').addEventListener('submit', async function (eventoapelido) {
     eventoapelido.preventDefault();
 
     const apelido = document.getElementById('inputApelido').value;
-
     console.log('Verificando apelido:', { apelido });
 
     try {
+        // Buscar o apelido atual vinculado ao usuário
         const querySnapshot = await getDocs(query(collection(db, 'apelidos'), where('usuarioId', '==', usuarioAtual)));
 
         if (!querySnapshot.empty) {
-            alert('Você já tem um apelido cadastrado.');
-            return;
+            // Se já houver um apelido, atualizar o documento
+            querySnapshot.forEach(async (doc) => {
+                await updateDoc(doc.ref, { apelido });
+            });
+            alert('Apelido atualizado com sucesso!');
+        } else {
+            // Caso não tenha apelido, criar um novo
+            await addDoc(collection(db, 'apelidos'), {
+                apelido,
+                usuarioId: usuarioAtual
+            });
+            alert('Apelido cadastrado com sucesso!');
         }
 
-        await addDoc(collection(db, 'apelidos'), {
-            apelido,
-            usuarioId: usuarioAtual
-        });
-
-        alert('Apelido cadastrado com sucesso!');
-        exibirApelido(); // Atualiza a mensagem com o novo apelido
+        // Atualizar a mensagem com o apelido atualizado
+        exibirApelido();
         document.getElementById('modalApelido').style.display = 'none';
     } catch (erro) {
-        console.error('Erro ao cadastrar apelido:', erro);
-        alert('Erro ao cadastrar apelido. Tente novamente mais tarde.');
+        console.error('Erro ao cadastrar ou atualizar apelido:', erro);
+        alert('Erro ao cadastrar ou atualizar apelido. Tente novamente mais tarde.');
     }
 });
 
 
+
+// Verifica se há um apelido cadastrado
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         usuarioAtual = user.uid;
@@ -170,6 +170,7 @@ onAuthStateChanged(auth, async (user) => {
         document.getElementById('mensagemApelido').innerText = '';
     }
 });
+
 
 
 // Função para exibir o apelido
@@ -197,8 +198,6 @@ async function exibirApelido() {
 
 // Chamar a função quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', exibirApelido);
-
-
 
 
 
@@ -236,7 +235,6 @@ document.getElementById('formEventoModal').addEventListener('submit', async func
         alert('Erro ao adicionar evento. Tente novamente mais tarde.');
     }
 });
-
 
 
 
@@ -285,12 +283,6 @@ window.editarEvento = async function (id) {
         }
     }
 };
-
-
-
-
-
-
 
 
 
@@ -406,9 +398,10 @@ async function carregarEventos() {
                     </tr>
                     <tr>
                         <td>
-                            <button onclick="window.open('${evento.local}', '_blank')" id="botaoLocal" title="Clique para ver o local do evento">🗺️</button>
-                            <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar">✏️</button>
-                            <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir">🗑️</button>  
+                            <button onclick="window.open('${evento.local}', '_blank')" id="botaoLocal" title="Clique para ver o local do evento"><span class="material-icons">location_on</span></button>
+                            <button onclick="editarEvento('${id}')" id="botaoEditar" title="Clique para editar"><span class="material-icons">edit</span></button>
+                            <button onclick="excluirEvento('${id}')" id="botaoExcluir" title="Clique para excluir"><span class="material-icons">delete</span></button>
+                             
                         </td>
                          <td></td>
                     </tr>
@@ -421,4 +414,3 @@ async function carregarEventos() {
         alert('Erro ao carregar eventos. Tente novamente mais tarde.');
     }
 }
-
