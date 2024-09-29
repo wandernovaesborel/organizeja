@@ -96,7 +96,7 @@ button {
 
 button.outros {
     background-color: #A100FF;
-    color: #D2A8FF;
+    color: #FFFFFF;
     cursor: pointer;
     width: 40%;
 }
@@ -105,21 +105,21 @@ button.outros {
 
 #botaoLogout, #cadastrarApelido {
     background-color: #D2A8FF;
-    color: #A100FF;
+    color: #2E2E2E;
     cursor: pointer;
     width: 70px;
 }
 
 #botaoLogout:hover, #cadastrarApelido:hover {
     background-color: #A100FF;
-    color: #D2A8FF;
+    color: #FFFFFF;
 }
 
 /* Botão + */
 
 #botaoAdicionarEvento {
     background-color: #D2A8FF;
-    color: #A100FF;
+    color: #2E2E2E;
     cursor: pointer;
     width: 40px;
     font-size: 24px;
@@ -127,42 +127,32 @@ button.outros {
 
 #botaoAdicionarEvento:hover {
     background-color: #A100FF;
-    color: #D2A8FF;
+    color: #FFFFFF;
 }
 
 /* Botões Editar / Excluir / Local */
 
 #botaoEditar, #botaoExcluir, #botaoLocal {
     background-color: #D2A8FF;
-    color: #A100FF;
+    color: #2E2E2E;
     cursor: pointer;
     width: 40px;
 }
 
 #botaoEditar:hover, #botaoExcluir:hover, #botaoLocal:hover {
     background-color: #A100FF;
-    color: #D2A8FF;
+    color: #FFFFFF;
 }
 
+/* Imagens */
 
-
-
-
-
-
-
-
-
-img {
+.login {
     width: 250px;
 }
 
-
-
-
-
-
-
+.propaganda {
+    width: 100%;
+}
 
 /* Containers individuais */
 
@@ -174,6 +164,15 @@ img {
     width: 100%;
     max-width: 500px;
     text-align: center;
+}
+
+.form-container2 {
+    background-color: #D2A8FF;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
 }
 
 .form-container input {
@@ -190,7 +189,6 @@ img {
 .event-container {
     background-color: #D2A8FF;
     border-radius: 8px;
-    padding: 20px;
     width: 100%;
     max-width: 500px;
 }
@@ -250,7 +248,6 @@ img {
 
 }
 
-
 .close {
     color: #A100FF;
     float: right;
@@ -264,15 +261,6 @@ img {
     text-decoration: none;
     cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
 
 /* Campos data e hora */
 .date-time-container {
