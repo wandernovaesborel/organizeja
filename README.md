@@ -7,3 +7,4 @@ Relatório - detalhamento do processo de criação do aplicativo, ferramentas ut
 
 Link do Figma: https://www.figma.com/design/X6XKHgmqBv3oHVgo9oFSJZ/AppAgenda?node-id=0-1&t=xJ4x6CkXfwQSeqeK-1
 
+OBS.: Marquei os botões clicáveis no Figma da amarelo para melhor navegação.
