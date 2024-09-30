@@ -1,10 +1,12 @@
 # organizeja
 Trabalho de aplicação Mobile
 
-Manual do Usuário - manual mostrando o passo-a-passo para usar a aplicação.
+**Manual do Usuário** - manual mostrando o passo-a-passo para usar a aplicação.
 
-Relatório - detalhamento do processo de criação do aplicativo, ferramentas utilizadas e expectativas futuras.
+***Favor desconsiderar o arquivo OrganizeJá - Manual.pdf (não consegui exluir). O correto é Manual do Usuário.***
 
-Link do Figma: https://www.figma.com/design/X6XKHgmqBv3oHVgo9oFSJZ/AppAgenda?node-id=0-1&t=xJ4x6CkXfwQSeqeK-1
+**Relatório** - detalhamento do processo de criação do aplicativo, ferramentas utilizadas e expectativas futuras.
 
-OBS.: Marquei os botões clicáveis no Figma da amarelo para melhor navegação.
+**Link do Figma:** https://www.figma.com/design/X6XKHgmqBv3oHVgo9oFSJZ/AppAgenda?node-id=0-1&t=xJ4x6CkXfwQSeqeK-1
+
+**OBS.:** Marquei os botões clicáveis no Figma da amarelo para melhor navegação.
