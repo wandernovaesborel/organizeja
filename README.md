@@ -3,7 +3,7 @@ Trabalho de aplicação Mobile
 
 **Manual do Usuário** - manual mostrando o passo-a-passo para usar a aplicação.
 
-***Favor desconsiderar o arquivo OrganizeJá - Manual.pdf (não consegui exluir). O correto é Manual do Usuário.***
+***Favor desconsiderar o arquivo "OrganizeJá - Manual.pdf" (não consegui exluir). O correto é "OrganizeJá - Manual do Usuário.pdf".***
 
 **Relatório** - detalhamento do processo de criação do aplicativo, ferramentas utilizadas e expectativas futuras.
 
